@@ -5,16 +5,53 @@
 // Funktionen ska använda setTimeout för att logga strängen efter den angivna tiden.
 // Använd en callback för att meddela när loggningen är klar.
 
+function delayLog(str, time) {
+ setTimeout(() => {
+  console.log(str);
+ }, time);
+}
+
+delayLog("Hello thuesday, FJSX24 and Syncron vs. asyncron code", 4000);
+
 // Mål:
 // Förstå hur man använder callbacks med setTimeout.
 // Praktisera enkel asynkronitet.
 // ------------------------------------------
 // Övning 2: Kedja Asynkrona Operationer (Medel)
 
+
+
 // Uppgift:
 // Använd fetch() för att hämta en användare från https://jsonplaceholder.typicode.com/users/1.
 // När användaren har hämtats, använd deras id för att hämta deras inlägg från https://jsonplaceholder.typicode.com/posts?userId=1.
 // Använd callbacks inom .then()-kedjan för att hantera resultaten och logga dem i konsolen.
+const url = 'https://jsonplaceholder.typicode.com/';
+
+async function fetchUserAndPosts() {
+ try {
+  const userResponse = await fetch(`${url}users/1`);
+   if (!userResponse.ok) {
+     throw new Error('Error fetching user');
+   }
+   const user = await userResponse.json();
+
+   console.log("user: ", user);
+   const userId = user.id;
+
+   const postsResponse = await fetch(`${url}posts?userId=${userId}`);
+   if (!postsResponse.ok) {
+     throw new Error('Error fetching posts');
+   }
+   const posts = await postsResponse.json();
+
+   console.log(`User: ${user.name}`);
+   console.log(`Posts: ${posts.length}`);
+ } catch (error) {
+   console.error('Something went wrong:', error.message);
+ }
+}
+
+fetchUserAndPosts();
 
 // Tips:
 // Använd separata funktioner för att hämta användaren och inläggen.
